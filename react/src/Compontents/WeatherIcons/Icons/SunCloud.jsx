@@ -2,7 +2,7 @@ import React from "react";
 
 const SunCloud = () => {
   return (
-    <div>
+  
       <svg
         className="sun-cloud"
         xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@ const SunCloud = () => {
           d="M352,208c0,8.8,7.2,16,16,16h32c8.8,0,16-7.2,16-16s-7.2-16-16-16h-32C359.2,192,352,199.2,352,208z"
         />
       </svg>
-    </div>
+
   );
 };
 
