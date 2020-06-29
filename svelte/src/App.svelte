@@ -10,7 +10,7 @@
   @tailwind utilities;
 </style>
 
-<main class="bg-pink-500">
+<main>
   <div class="w-screen h-screen flex flex-wrap bg-gray-900 text-white">
     <div class="w-full md:w-1/2">
       <Clock />
