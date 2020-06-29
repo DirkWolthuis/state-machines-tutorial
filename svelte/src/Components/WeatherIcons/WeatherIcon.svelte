@@ -1,6 +1,5 @@
 <script>
   export let type;
-  import Thunder from "./Icons/Thunder.svelte";
 </script>
 
 <style type="text/scss">

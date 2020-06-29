@@ -4,7 +4,11 @@
 </script>
 
 {#if alarm}
-
+ <div class="flex justify-center items-center h-full w-full p-8">
+    <Alarm />
+  </div>
+ 
+{:else}
   <div class="flex flex-col justify-center items-center h-full">
     <p class="mb-4">No alarms set yet.</p>
     <button
@@ -12,9 +16,5 @@
       hover:bg-white hover:text-gray-800">
       Add alarm +
     </button>
-  </div>
-{:else}
-  <div class="flex justify-center items-center h-full w-full p-8">
-    <Alarm />
   </div>
 {/if}

@@ -1,28 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <main>
+      <div class="w-screen h-screen flex flex-wrap bg-gray-900 text-white">
+        <div class="w-full md:w-1/2">
+          <Clock />
+        </div>
+        <div class="w-full md:w-1/2 flex flex-col">
+          <div class="h-full">
+            <Weather />
+          </div>
+          <div class="h-full">
+            <Alarms />
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Clock from "./components/Clock.vue";
+import Alarms from './components/Alarms.vue';
+import Weather from './components/Weather.vue';
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Clock,
+    Alarms,
+    Weather
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
