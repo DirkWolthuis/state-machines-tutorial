@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,8 +20,8 @@
     "build:tailwind": "postcss src/tailwind.css -o src/tailwind.generated.css",
     "watch:tailwind": "postcss -w src/tailwind.css -o src/tailwind.generated.css",
   
-    "start": "run-p watch:tailwind start:react",
-    "start:react": "react-scripts start",
+    "dev": "run-p watch:tailwind dev:react",
+    "dev:react": "react-scripts start",
   
     "prebuild": "npm run build:tailwind",
     "build": "react-scripts build",
