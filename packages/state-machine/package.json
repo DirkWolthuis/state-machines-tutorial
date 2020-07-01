@@ -1,0 +1,7 @@
+{
+  "name": "@fsm/state-machine",
+  "version": "1.0.0",
+  "dependencies": {
+    "xstate": "^4.10.0"
+  }
+}

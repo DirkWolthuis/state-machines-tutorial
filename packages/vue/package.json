@@ -1,13 +1,13 @@
 {
   "name": "vue",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fsm/state-machine": "^1.0.0",
     "core-js": "^3.6.5",
     "tailwindcss": "^1.4.6",
     "vue": "^2.6.11",

@@ -4,6 +4,7 @@ import Weather from "./Compontents/Weather";
 import Alarms from "./Compontents/Alarms";
 
 function App() {
+ 
   return (
     <div className="w-screen h-screen flex flex-wrap bg-gray-900 text-white">
       <div className="w-full md:w-1/2">

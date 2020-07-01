@@ -1,5 +1,5 @@
 {
-  "name": "svelte-app",
+  "name": "svelte",
   "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",
@@ -20,6 +20,7 @@
     "tailwindcss": "^1.4.6"
   },
   "dependencies": {
+    "@fsm/state-machine": "^1.0.0",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "sass": "^1.26.9",
     "sirv-cli": "^0.4.4"
