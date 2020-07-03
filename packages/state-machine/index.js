@@ -1,4 +1,4 @@
-import { Machine } from "xstate";
+import { Machine, assign } from "xstate";
 
 export const alarmMachine = Machine({
   id: "alarm",
@@ -12,19 +12,18 @@ export const alarmMachine = Machine({
   },
 });
 
-const alarmMachine = Machine(
+export const clockMachine = Machine(
   {
     id: "alarm-clock",
-
     context: {
-      weather: "",
+      openWeatherAPIKey: null,
     },
 
     initial: "showClock",
     states: {
       showClock: {
         type: "parallel",
-        activities: ["timeIncrement"],
+        // activities: ["timeIncrement"],
         on: {
           START_RINGING: {
             target: "ringing",
@@ -37,7 +36,7 @@ const alarmMachine = Machine(
               idle: {
                 on: {
                   "": [
-                    { target: "show", cond: () => false },
+                    { target: "show", cond: (context) => context.weather},
                     { target: "loading" },
                   ],
                 },
@@ -45,7 +44,10 @@ const alarmMachine = Machine(
               loading: {
                 invoke: {
                   id: "getWeather",
-                  src: (context, event) => apiCall(),
+                  src: (context, event) =>
+                    fetch(
+                      `https://api.openweathermap.org/data/2.5/weather?q=${context.city}&appid=${context.openWeatherAPIKey}&units=metric`
+                    ),
                   onDone: {
                     target: "show",
                   },
@@ -107,27 +109,25 @@ const alarmMachine = Machine(
         },
       },
     },
-  },
-  {
-    activities: {
-      timeIncrement: (context, activity) => {
-        // Start the beeping activity
-        const timeInterval = setInterval(
-          () =>
-            assign({
-              time: new Date(),
-            }),
-          1000
-        );
-
-        // Return a function that stops the beeping activity
-        return () => clearInterval(timeInterval);
-      },
-    },
   }
+  // {
+  //   activities: {
+  //     timeIncrement: (context, activity) => {
+  //       // Start the beeping activity
+  //       const timeInterval = setInterval(
+  //         () =>
+  //           assign({
+  //             time: () => new Date(),
+  //           }),
+  //         1000
+  //       );
+
+  //       // Return a function that stops the beeping activity
+  //       return () => clearInterval(timeInterval);
+  //     },
+  //   },
+  // }
 );
 
 const apiCall = () =>
   new Promise((resolve, reject) => setTimeout(() => resolve("value"), 2000));
-
-  export { alarmMachine as default };
