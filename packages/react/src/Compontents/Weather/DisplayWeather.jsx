@@ -1,7 +1,7 @@
 import React from "react";
 import WeatherIcon from "./WeatherIcons/WeatherIcon";
 
-const Weather = () => {
+const DisplayWeather = () => {
   return (
     <div className="flex justify-center items-center h-full">
       <div className="flex">
@@ -15,4 +15,4 @@ const Weather = () => {
   );
 };
 
-export default Weather;
+export default DisplayWeather;

@@ -1,6 +1,6 @@
 import React from "react";
 import Clock from "./Compontents/Clock";
-import Weather from "./Compontents/Weather";
+import Weather from "./Compontents/Weather/Weather";
 import Alarms from "./Compontents/Alarms";
 import { useMachine } from "@xstate/react";
 import { clockMachine } from "@fsm/state-machine";
@@ -10,7 +10,6 @@ function App() {
   const [state, send] = useMachine(clockMachine.withContext({openWeatherAPIKey: process.env.REACT_APP_OPENWEATHER_API, city: 
   'Utrecht'})
   );
-    console.log(state);
     
   return (
     <div className="w-screen h-screen flex flex-wrap bg-gray-900 text-white">

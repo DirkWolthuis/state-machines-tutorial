@@ -22,9 +22,17 @@ export const clockMachine = Machine(
     initial: "showClock",
     states: {
       showClock: {
+        invoke: {
+          src: () => (sendBack) => {
+            const interval = setInterval(() => {
+              sendBack("UPDATE_TIME");
+            }, 1000);
+            return () => clearInterval(interval);
+          },
+        },
         type: "parallel",
-        // activities: ["timeIncrement"],
         on: {
+          UPDATE_TIME: { actions: assign({ time: () => new Date() }) },
           START_RINGING: {
             target: "ringing",
           },
@@ -36,8 +44,12 @@ export const clockMachine = Machine(
               idle: {
                 on: {
                   "": [
-                    { target: "show", cond: (context) => context.weather},
-                    { target: "loading" },
+                    { target: "show", cond: (context) => context.weather },
+                    {
+                      target: "loading",
+                      cond: (context) => context.weather_city,
+                    },
+                    { target: "select" },
                   ],
                 },
               },
@@ -56,6 +68,7 @@ export const clockMachine = Machine(
                   },
                 },
               },
+              select: {},
               show: {
                 on: {
                   REFRESH: {
