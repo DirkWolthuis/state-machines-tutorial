@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "xstate": "^4.10.0"
+    "xstate": "^4.13.0"
   }
 }

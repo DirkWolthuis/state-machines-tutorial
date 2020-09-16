@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './tailwind.generated.css';
+import { inspect } from "@xstate/inspect";
+
+inspect({
+  url: "https://statecharts.io/inspect",
+  iframe: false
+});
 
 ReactDOM.render(
   <React.StrictMode>

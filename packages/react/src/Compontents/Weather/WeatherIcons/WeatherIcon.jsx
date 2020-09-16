@@ -9,37 +9,43 @@ import Windy from "./Icons/Windy";
 
 const WeatherIcon = ({ type }) => {
   switch (type) {
-    case "thunder":
+    case "Thunderstorm":
       return (
         <IconContainer>
           <Thunder />
         </IconContainer>
       );
-    case "rain":
+    case "Drizzle":
       return (
         <IconContainer>
           <Rain />
         </IconContainer>
       );
-    case "snow":
+    case "Rain":
+      return (
+        <IconContainer>
+          <Rain />
+        </IconContainer>
+      );
+    case "Snow":
       return (
         <IconContainer>
           <Snow />
         </IconContainer>
       );
-    case "sun-cloud":
+    case "Clouds":
       return (
         <IconContainer>
           <SunCloud />
         </IconContainer>
       );
-    case "sun":
+    case "Clear":
       return (
         <IconContainer>
           <Sun />
         </IconContainer>
       );
-    case "windy":
+    case "Tornado":
       return (
         <IconContainer>
           <Windy />
@@ -48,7 +54,7 @@ const WeatherIcon = ({ type }) => {
     default:
       return (
         <IconContainer>
-          <Thunder />
+          <Sun />
         </IconContainer>
       );
   }

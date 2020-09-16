@@ -5,12 +5,13 @@ import Alarms from "./Compontents/Alarms";
 import { useMachine } from "@xstate/react";
 import { clockMachine } from "@fsm/state-machine";
 
-function App() {
-
-  const [state, send] = useMachine(clockMachine.withContext({openWeatherAPIKey: process.env.REACT_APP_OPENWEATHER_API, city: 
+const clockMachineWithContext = clockMachine.withContext({openWeatherAPIKey: process.env.REACT_APP_OPENWEATHER_API, city: 
   'Utrecht'})
-  );
-    
+
+function App() {
+ 
+  const [state, send] = useMachine(clockMachineWithContext, {devTools: true});
+  
   return (
     <div className="w-screen h-screen flex flex-wrap bg-gray-900 text-white">
       <div className="w-full md:w-1/2">
