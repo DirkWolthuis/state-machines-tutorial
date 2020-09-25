@@ -5,8 +5,7 @@ import Alarms from "./Compontents/Alarms";
 import { useMachine } from "@xstate/react";
 import { clockMachine } from "@fsm/state-machine";
 
-const clockMachineWithContext = clockMachine.withContext({openWeatherAPIKey: process.env.REACT_APP_OPENWEATHER_API, city: 
-  'Utrecht'})
+const clockMachineWithContext = clockMachine.withContext({openWeatherAPIKey: process.env.REACT_APP_OPENWEATHER_API, alarms: []})
 
 function App() {
  
@@ -22,7 +21,7 @@ function App() {
           <Weather state={state} send={send} />
         </div>
         <div className="h-full">
-          <Alarms state={state} send={send} alarms={[]} />
+          <Alarms state={state} send={send} />
         </div>
       </div>
     </div>

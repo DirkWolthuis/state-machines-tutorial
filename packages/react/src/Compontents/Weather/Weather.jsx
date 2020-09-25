@@ -12,11 +12,11 @@ const Weather = ({ state, send }) => {
   if (state.matches("showClock.weather.loading")) {
     return <WeatherLoading />;
   }
+  if (state.matches("showClock.weather.failure")) {
+    return <p>API CALL FAILED</p>;
+  }
   if (state.matches("showClock.weather.show")) {
     return <DisplayWeather weather={state.context.weather} />;
-  }
-  if (state.matches("showClock.weather.failure")) {
-    return <p>no weather</p>;
   }
   if (state.matches("showClock.weather.select")) {
     return <SelectWeatherCity onSelectCity={onSelectCity} />;

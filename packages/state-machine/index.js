@@ -14,9 +14,6 @@ export const alarmMachine = Machine({
 
 export const clockMachine = Machine({
   id: "alarm-clock",
-  context: {
-    openWeatherAPIKey: null,
-  },
 
   initial: "showClock",
   states: {
@@ -95,17 +92,16 @@ export const clockMachine = Machine({
           states: {
             idle: {
               on: {
-                SET_ALARM: {
-                  target: "setAlarm",
+                ADD_ALARM: {
+                  target: "addAlarm",
                 },
               },
             },
-            setAlarm: {
+            addAlarm: {
               on: {
-                CREATE_ALARM: {
+                SET_ALARM: {
                   invoke: {
                     src: alarmMachine,
-
                     data: {
                       timeToRing: (context, event) => event.payload,
                     },
@@ -132,4 +128,13 @@ export const clockMachine = Machine({
 const fetchWeather = (city, apiKey) =>
   fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
-  ).then((response) => response.json());
+  )
+    .then(handleErrors)
+    .then((response) => response.json());
+
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+  return response;
+}
