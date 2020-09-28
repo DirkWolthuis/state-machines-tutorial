@@ -1,13 +1,35 @@
-import { Machine, assign, spawn } from "xstate";
+import { Machine, assign, spawn, sendParent } from "xstate";
 
 export const alarmMachine = Machine({
   id: "alarm",
   initial: "active",
-  context: {
-    timeToRing: null,
-  },
+  context: {},
   states: {
-    active: {},
+    active: {
+      invoke: {
+        src: (context) => (sendBack) => {
+          const interval = setInterval(() => {
+            if (
+              new Date().getHours() === context.timeToRing.getHours() &&
+              new Date().getMinutes() === context.timeToRing.getMinutes()
+            ) {
+              sendBack("START_RINGING");
+            }
+          }, 1000);
+          return () => clearInterval(interval);
+        },
+      },
+      on: {
+        CANCEL_ALARM: {
+          target: "finished",
+          actions: sendParent("DELETE_ALARM"),
+        },
+        START_RINGING: {
+          actions: sendParent("START_RINGING"),
+          target: "finished",
+        },
+      },
+    },
     finished: { type: "final" },
   },
 });
@@ -94,6 +116,9 @@ export const clockMachine = Machine({
                 ADD_ALARM: {
                   target: "addAlarm",
                 },
+                DELETE_ALARM: {
+                  actions: (context, event) => console.log(event),
+                },
               },
             },
             addAlarm: {
@@ -103,7 +128,13 @@ export const clockMachine = Machine({
                     alarms: (context, event) => [
                       ...context.alarms,
                       spawn(
-                        alarmMachine.withContext({ timeToRing: event.payload })
+                        alarmMachine.withContext({
+                          timeToRing: createTimeToRingDate(
+                            context.time,
+                            event.payload.hours,
+                            event.payload.minutes
+                          ),
+                        })
                       ),
                     ],
                   }),
@@ -139,3 +170,23 @@ function handleErrors(response) {
   }
   return response;
 }
+
+const createTimeToRingDate = (currentDate, hours, minutes) => {
+  if (
+    currentDate.getHours() > hours ||
+    (currentDate.getHours() === hours && currentDate.getMinutes() >= minutes)
+  ) {
+    const timeToRing = new Date();
+    timeToRing.setDate(timeToRing.getDate() + 1);
+    timeToRing.setHours(hours);
+    timeToRing.setMinutes(minutes);
+    timeToRing.setSeconds(0);
+    return timeToRing;
+  } else {
+    const timeToRing = new Date();
+    timeToRing.setHours(hours);
+    timeToRing.setMinutes(minutes);
+    timeToRing.setSeconds(0);
+    return timeToRing;
+  }
+};
