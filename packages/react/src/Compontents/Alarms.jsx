@@ -17,7 +17,7 @@ const Alarms = ({ state, send }) => {
         {state.context.alarms?.length === 0 ? (
           <p className="mb-4">No alarms set yet.</p>
         ) : (
-          state.context.alarms.map((alarm) => <Alarm />)
+          state.context.alarms.map((alarm) => <Alarm alarm={alarm} />)
         )}
         <button
           onClick={() => send({ type: "ADD_ALARM" })}

@@ -1,8 +1,10 @@
 import React from "react";
+import { useService, useActor } from "@xstate/react";
+const Alarm = (alarm) => {
+  const x = useService(alarm);
 
-const Alarm = () => {
   return (
-    <div className="w-full flex justify-between items-center">
+    <div className="w-full flex justify-between items-center p-8">
       <div>
         <small>alarm set for:</small>
         <h1 className="font-mono text-4xl">21:00</h1>

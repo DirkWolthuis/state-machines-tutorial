@@ -1,4 +1,4 @@
-import { Machine, assign } from "xstate";
+import { Machine, assign, spawn } from "xstate";
 
 export const alarmMachine = Machine({
   id: "alarm",
@@ -14,7 +14,6 @@ export const alarmMachine = Machine({
 
 export const clockMachine = Machine({
   id: "alarm-clock",
-
   initial: "showClock",
   states: {
     showClock: {
@@ -100,12 +99,14 @@ export const clockMachine = Machine({
             addAlarm: {
               on: {
                 SET_ALARM: {
-                  invoke: {
-                    src: alarmMachine,
-                    data: {
-                      timeToRing: (context, event) => event.payload,
-                    },
-                  },
+                  actions: assign({
+                    alarms: (context, event) => [
+                      ...context.alarms,
+                      spawn(
+                        alarmMachine.withContext({ timeToRing: event.payload })
+                      ),
+                    ],
+                  }),
                   target: "idle",
                 },
               },
