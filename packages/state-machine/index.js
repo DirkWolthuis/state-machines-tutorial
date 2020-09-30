@@ -29,12 +29,20 @@ export const alarmMachine = Machine({
           })),
         },
         START_RINGING: {
-          actions: sendParent("START_RINGING"),
+          actions: [
+            sendParent((context, event) => ({
+              type: "DELETE_ALARM",
+              payload: context.id,
+            })),
+            sendParent("START_RINGING"),
+          ],
           target: "finished",
         },
       },
     },
-    finished: { type: "final" },
+    finished: {
+      type: "final",
+    },
   },
 });
 
@@ -122,8 +130,9 @@ export const clockMachine = Machine({
                 },
                 DELETE_ALARM: {
                   actions: assign({
-                    alarms: (context, event) => context.alarms.filter(a => a.id !== event.payload)
-                  })
+                    alarms: (context, event) =>
+                      context.alarms.filter((a) => a.id !== event.payload),
+                  }),
                 },
               },
             },
@@ -131,19 +140,23 @@ export const clockMachine = Machine({
               on: {
                 SET_ALARM: {
                   actions: assign({
-                    alarms: (context, event) => [
-                      ...context.alarms,
-                      spawn(
-                        alarmMachine.withContext({
-                          timeToRing: createTimeToRingDate(
-                            context.time,
-                            event.payload.hours,
-                            event.payload.minutes
-                          ),
-                        }),
-                        uuidv4(),
-                      ),
-                    ],
+                    alarms: (context, event) => {
+                      const id = uuidv4();
+                      return [
+                        ...context.alarms,
+                        spawn(
+                          alarmMachine.withContext({
+                            id: id,
+                            timeToRing: createTimeToRingDate(
+                              context.time,
+                              event.payload.hours,
+                              event.payload.minutes
+                            ),
+                          }),
+                          id
+                        ),
+                      ];
+                    },
                   }),
                   target: "idle",
                 },

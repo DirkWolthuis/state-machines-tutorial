@@ -7,24 +7,13 @@ const dateTimeFormat = new Intl.DateTimeFormat("nl", {
 });
 
 const Clock = ({ state }) => {
-  if (state.matches("showClock")) {
-    return (
-      <div className="flex justify-center items-center h-full">
-        <h1 className="text-6xl font-mono">
-          {dateTimeFormat.format(state.context.time)}
-        </h1>
-      </div>
-    );
-  }
-  if (state.matches("ringing")) {
-    return (
-      <div className="flex justify-center items-center h-full">
-        <h1 className="text-6xl font-mono">RINGING</h1>
-      </div>
-    );
-  } else {
-    return null;
-  }
+  return (
+    <div className="flex justify-center items-center h-full">
+      <h1 className="text-6xl font-mono">
+        {dateTimeFormat.format(state.context.time)}
+      </h1>
+    </div>
+  );
 };
 
 export default Clock;
