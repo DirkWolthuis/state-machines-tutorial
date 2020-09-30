@@ -19,7 +19,10 @@ const Alarm = ({ alarm }) => {
       </div>
 
       <div>
-        <button onClick={() => send('CANCEL_ALARM')} className="py-2 px-3 rounded border-2 border-white font-bold text-white hover:bg-white hover:text-gray-800">
+        <button
+          onClick={() => send({ type: "CANCEL_ALARM", payload: alarm.id })}
+          className="py-2 px-3 rounded border-2 border-white font-bold text-white hover:bg-white hover:text-gray-800"
+        >
           Cancel
         </button>
       </div>

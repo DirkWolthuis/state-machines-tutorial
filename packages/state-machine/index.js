@@ -1,4 +1,5 @@
 import { Machine, assign, spawn, sendParent } from "xstate";
+import { v4 as uuidv4 } from "uuid";
 
 export const alarmMachine = Machine({
   id: "alarm",
@@ -22,7 +23,10 @@ export const alarmMachine = Machine({
       on: {
         CANCEL_ALARM: {
           target: "finished",
-          actions: sendParent("DELETE_ALARM"),
+          actions: sendParent((context, event) => ({
+            type: "DELETE_ALARM",
+            payload: event.payload,
+          })),
         },
         START_RINGING: {
           actions: sendParent("START_RINGING"),
@@ -117,7 +121,9 @@ export const clockMachine = Machine({
                   target: "addAlarm",
                 },
                 DELETE_ALARM: {
-                  actions: (context, event) => console.log(event),
+                  actions: assign({
+                    alarms: (context, event) => context.alarms.filter(a => a.id !== event.payload)
+                  })
                 },
               },
             },
@@ -134,7 +140,8 @@ export const clockMachine = Machine({
                             event.payload.hours,
                             event.payload.minutes
                           ),
-                        })
+                        }),
+                        uuidv4(),
                       ),
                     ],
                   }),

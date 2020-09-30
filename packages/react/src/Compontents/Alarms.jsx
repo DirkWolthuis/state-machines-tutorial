@@ -10,14 +10,13 @@ const Alarms = ({ state, send }) => {
     setHours("");
     setMinutes("");
   };
-
   if (state.matches("showClock.alarm.idle")) {
     return (
       <div className="flex flex-col justify-center items-center h-full">
         {state.context.alarms?.length === 0 ? (
           <p className="mb-4">No alarms set yet.</p>
         ) : (
-          state.context.alarms.map((alarm) => <Alarm alarm={alarm} />)
+          state.context.alarms.map((alarm) => <Alarm key={alarm.id} alarm={alarm} />)
         )}
         <button
           onClick={() => send({ type: "ADD_ALARM" })}
