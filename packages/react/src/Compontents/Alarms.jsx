@@ -16,7 +16,9 @@ const Alarms = ({ state, send }) => {
         {state.context.alarms?.length === 0 ? (
           <p className="mb-4">No alarms set yet.</p>
         ) : (
-          state.context.alarms.map((alarm) => <Alarm key={alarm.id} alarm={alarm} />)
+          state.context.alarms.map((alarm) => (
+            <Alarm key={alarm.id} alarm={alarm} />
+          ))
         )}
         <button
           onClick={() => send({ type: "ADD_ALARM" })}
@@ -35,7 +37,7 @@ const Alarms = ({ state, send }) => {
           autoFocus
           value={hours}
           onChange={(e) => {
-            setHours(e.target.value);
+            setHours(e.target.value > 23 ? 23 : e.target.value);
           }}
           type="number"
           placeholder="enter hours"
@@ -46,7 +48,7 @@ const Alarms = ({ state, send }) => {
           autoFocus
           value={minutes}
           onChange={(e) => {
-            setMinutes(e.target.value);
+            setMinutes( e.target.value > 59 ? 59 :e.target.value);
           }}
           type="number"
           placeholder="enter minutes"
@@ -54,9 +56,15 @@ const Alarms = ({ state, send }) => {
         />
         <button
           onClick={onSetAlarm}
-          className="py-2 px-3 rounded border-2 border-white font-bold text-white hover:bg-white hover:text-gray-800"
+          className="py-2 px-3 rounded-l border-2 border-white font-bold text-white hover:bg-white hover:text-gray-800"
         >
           Set alarm
+        </button>
+        <button
+          onClick={() => send("CANCEL_ADD_ALARM")}
+          className="py-2 px-3 rounded-r border-2 border-white font-bold text-white hover:bg-white hover:text-gray-800"
+        >
+          Cancel
         </button>
       </div>
     );

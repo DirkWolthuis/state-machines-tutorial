@@ -1,6 +1,7 @@
 import React from "react";
 import DisplayWeather from "./DisplayWeather";
 import SelectWeatherCity from "./SelectWeatherCity";
+import WeatherFailed from "./WeatherFailed";
 import WeatherLoading from "./WeatherLoading";
 
 const Weather = ({ state, send }) => {
@@ -13,10 +14,10 @@ const Weather = ({ state, send }) => {
     return <WeatherLoading />;
   }
   if (state.matches("showClock.weather.failure")) {
-    return <p>API CALL FAILED</p>;
+    return <WeatherFailed send={send} />;
   }
   if (state.matches("showClock.weather.show")) {
-    return <DisplayWeather weather={state.context.weather} />;
+    return <DisplayWeather send={send} weather={state.context.weather} />;
   }
   if (state.matches("showClock.weather.select")) {
     return <SelectWeatherCity onSelectCity={onSelectCity} />;

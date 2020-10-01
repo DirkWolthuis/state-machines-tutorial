@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 export const alarmMachine = Machine({
   id: "alarm",
   initial: "active",
-  context: {},
   states: {
     active: {
       invoke: {
@@ -116,6 +115,9 @@ export const clockMachine = Machine({
                 RETRY: {
                   target: "loading",
                 },
+                SELECT_OTHER_CITY: {
+                  target: "select",
+                },
               },
             },
           },
@@ -153,11 +155,14 @@ export const clockMachine = Machine({
                               event.payload.minutes
                             ),
                           }),
-                          id
+                          { name: id, sync: true }
                         ),
                       ];
                     },
                   }),
+                  target: "idle",
+                },
+                CANCEL_ADD_ALARM: {
                   target: "idle",
                 },
               },
