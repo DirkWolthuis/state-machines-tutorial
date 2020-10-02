@@ -1,3 +1,4 @@
+import { clockMachine } from "@fsm/state-machine";
 import { useMachine } from "@xstate/react";
 import React, { useEffect } from "react";
 import Alarms from "./Alarms";
@@ -9,12 +10,18 @@ const dateTimeFormat = new Intl.DateTimeFormat("nl", {
   //second: "numeric",
 });
 
-const Clock = ({ machine }) => {
-  const [state, send] = useMachine(machine, { devTools: true });
+const machineWithContext = clockMachine.withContext({
+  openWeatherAPIKey: process.env.REACT_APP_OPENWEATHER_API,
+  alarms: [],
+})
+
+const Clock = ({ restoredState }) => {
+  const [state, send] = useMachine(machineWithContext, { devTools: true, state: restoredState  });
+  //console.log(state.context?.alarms[0]?.state?.context)
  
-  // useEffect(() => {
-  //   localStorage.setItem("state-machine", JSON.stringify(state.context));
-  // }, [state.context]);
+  useEffect(() => {
+    localStorage.setItem("state-machine", JSON.stringify(state));
+  }, [state]);
 
   if (state.matches("ringing")) {
     return (
