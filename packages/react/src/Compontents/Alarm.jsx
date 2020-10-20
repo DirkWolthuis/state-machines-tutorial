@@ -4,7 +4,6 @@ import { useActor } from "@xstate/react";
 const dateTimeFormat = new Intl.DateTimeFormat("nl", {
   hour: "numeric",
   minute: "numeric",
-  //second: "numeric",
 });
 const Alarm = ({ alarm }) => {
   const [state, send] = useActor(alarm);
@@ -13,8 +12,11 @@ const Alarm = ({ alarm }) => {
     <div className="w-full flex justify-between items-center p-8">
       <div>
         <small>alarm set for:</small>
-        <h1 className="font-mono text-4xl">
-          {dateTimeFormat.format(state.context.timeToRing)}
+        <h1 className="font-mono text-4xl flex items-center">
+          {dateTimeFormat.format(state.context.timeToRing)}{" "}
+          <small className="ml-4 bg-white text-gray-900 rounded p-2 text-sm">
+            {isToday(state.context.timeToRing) ? "today" : "tomorrow"}
+          </small>
         </h1>
       </div>
 
@@ -31,3 +33,12 @@ const Alarm = ({ alarm }) => {
 };
 
 export default Alarm;
+
+const isToday = (someDate) => {
+  const today = new Date();
+  return (
+    someDate.getDate() === today.getDate() &&
+    someDate.getMonth() === today.getMonth() &&
+    someDate.getFullYear() === today.getFullYear()
+  );
+};
