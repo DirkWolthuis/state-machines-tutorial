@@ -7,21 +7,20 @@ import Weather from "./Weather/Weather";
 const dateTimeFormat = new Intl.DateTimeFormat("nl", {
   hour: "numeric",
   minute: "numeric",
-  //second: "numeric",
+  second: "numeric",
 });
 
 const machineWithContext = clockMachine.withContext({
   openWeatherAPIKey: process.env.REACT_APP_OPENWEATHER_API,
   alarms: [],
-})
+});
 
-const Clock = ({ restoredState }) => {
-  const [state, send] = useMachine(machineWithContext, { devTools: true, state: restoredState  });
-  //console.log(state.context?.alarms[0]?.state?.context)
- 
+const Clock = () => {
+  const [state, send] = useMachine(machineWithContext, { devTools: true });
+
   useEffect(() => {
-    localStorage.setItem("state-machine", JSON.stringify(state));
-  }, [state]);
+    //save these events to local storage and replay them.
+  }, [state.transitions]);
 
   if (state.matches("ringing")) {
     return (

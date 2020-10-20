@@ -4,7 +4,6 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./tailwind.generated.css";
 import { inspect } from "@xstate/inspect";
-import Test from "./Compontents/Test";
 
 inspect({
   url: "https://statecharts.io/inspect",
@@ -13,8 +12,7 @@ inspect({
 
 ReactDOM.render(
   <React.StrictMode>
-    <Test />
-    {/* <App /> */}
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
