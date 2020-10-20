@@ -171,7 +171,6 @@ export const clockMachine = Machine({
         },
       },
     },
-
     ringing: {
       on: {
         STOP_RINGING: {
