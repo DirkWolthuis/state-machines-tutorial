@@ -48,7 +48,7 @@ const Alarms = ({ state, send }) => {
           autoFocus
           value={minutes}
           onChange={(e) => {
-            setMinutes( e.target.value > 59 ? 59 :e.target.value);
+            setMinutes(e.target.value > 59 ? 59 : e.target.value);
           }}
           type="number"
           placeholder="enter minutes"

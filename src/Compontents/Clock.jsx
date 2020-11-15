@@ -1,4 +1,4 @@
-import { clockMachine } from "@fsm/state-machine";
+import { clockMachine } from "../state-machine";
 import { useMachine } from "@xstate/react";
 import React, { useEffect } from "react";
 import Alarms from "./Alarms";
